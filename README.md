@@ -30,7 +30,7 @@ clone o repositorio e mova manuamente os arquivos, se houver alguma configuraç�
 
 Usando o instalador automatico:
 
-	bash <(curl -s -o 'https://github.com/zRenegado/i3-desktop/raw/master/Script%20de%20Instala%C3%A7%C3%A3o/script_de_instalacao_config_i3.sh')>
+	bash <(curl -s -o 'https://raw.githubusercontent.com/zRenegado/i3-desktop/master/Script%20de%20Instala%C3%A7%C3%A3o/script_de_instalacao_config_i3.sh')>
 
 Se necessario forneça a permissão de execussão,"$ chmod +x" aos scripts em ~/.config/polybar/scripts e ~/.local/bin, o primeiro exemplo é dando permissão a qualquer arquivo .sh e o segundo a um arquivo especifico:
 	$chmod +x ~/.local/bin/*.sh 
@@ -38,4 +38,5 @@ Se necessario forneça a permissão de execussão,"$ chmod +x" aos scripts em ~/
 ## ScreenShots
 
 ![Screenshot #1][screenshot1]
+
 [screenshot1]:https://github.com/zRenegado/i3-desktop/blob/master/.Screeshot/i3.png "Screnshot #1"
