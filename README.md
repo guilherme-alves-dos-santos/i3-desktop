@@ -34,4 +34,4 @@ $chmod +x ~/.local/bin/*.sh
 ## ScreenShots
 
 ![Screenshot #1][screenshot1]
-[screenshot]: https://github.com/zRenegado/i3-desktop/blob/master/.Screeshot/i3.png "Screnshot #1"
+[screenshot]:https://raw.githubusercontent.com/zRenegado/i3-desktop/master/.Screeshot/i3.png "Screnshot #1"
