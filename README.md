@@ -30,7 +30,7 @@ configuração já existente faça backup
 Se necessario forneça a permissão de execussão,"$ chmod +x" aos scripts em 
 ~/.config/polybar/scripts e ~/.local/bin, exemplo:
 	$chmod +x ~/.local/bin/*.sh 
-
+*Obs.: Testa no ArchLinux em 31/05/2018
 ## ScreenShots
 
 ![Screenshot #1][screenshot1]
