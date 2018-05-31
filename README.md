@@ -1,6 +1,6 @@
 ## i3-desktop
   Configuração do i3, polybar, rofi Para usar é nessario previamente instalar: i3-gaps, polybar, dunst, xdotool, ttf-fira-sans, adobe-source-code-pro-fonts, jsoncpp, rofi e community/ttf-font-awesome.
-## Sumário
+## Súmario
 - [i3-gaps](https://github.com/zRenegado/i3-desktop/blob/master/.config/i3/config)
 - [polybar](https://github.com/zRenegado/i3-desktop/blob/master/.config/polybar/config)
 - [i3blocks](https://github.com)
