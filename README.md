@@ -32,6 +32,6 @@ Se necessario forneça a permissão de execussão,"$ chmod +x" aos scripts em
 $chmod +x ~/.local/bin/*.sh 
 
 ## ScreenShots
+
 ![Screenshot #1][screenshot1]
-[screenshot]: 
-https://github.com/zRenegado/i3-desktop/blob/master/.Screeshot/i3.png "Screnshot #1"
+[screenshot]: https://github.com/zRenegado/i3-desktop/blob/master/.Screeshot/i3.png "Screnshot #1"
