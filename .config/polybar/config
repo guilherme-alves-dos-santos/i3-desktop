@@ -1,0 +1,522 @@
+;----------------------------------------------------------
+;		        C O L O R S
+;----------------------------------------------------------
+; 100%: FF - 95%: F2 - 90%: E6 - 85%: D9 - 80%: CC - 75%: BF - 70%: B3 - 65%: A6 - 60%: 99 - 55%: 8C
+; 50%: 80 - 45%: 73 - 40%: 66 - 35%: 59 - 30%: 4D - 25%: 40 - 20%: 33 - 15%: 26 - 10%: 1A - 5%: 0D - 0%: 00
+
+[colors]
+transparente = #00000000
+foreground = ${xrdb:color7:#D8DEE9}
+foreground-alt = #555
+background = ${xrdb:color0:#2E3440}
+background-alt = #444
+unfocused = #85888f
+urgente = #bf616a
+destaque = #bf616a
+primary = #ffb52a
+secondary = #e60053
+preto = #000
+branco = #FFFFFF
+rosa = #e60053
+
+
+;----------------------------------------------------------
+;		        B A R / T O P
+;----------------------------------------------------------
+[bar/top]
+;monitor = ${env:MONITOR:DVI-I-0}
+width = 100%
+height = 27
+fixed-center = true
+
+background = ${colors.transparente}
+foreground = ${colors.foreground}
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = Fira:size=10;3
+font-1 = feather:pixelsize=11;3
+font-2 = Fira:size=8;1
+font-3 = Zekton:Bold:size=12;4
+font-4 = "Font Awesome 5 Free:style=Regular:pixelsize=14;4"
+font-5 = "Font Awesome 5 Free:style=Solid:pixelsize=14;4"
+font-6 = "Font Awesome 5 Brands:pixelsize=14;4"
+
+modules-left = i3
+modules-center = window
+modules-right = filesystem cpu network temp hora volume bateria ethernet power
+
+;cursor-click = pointer
+;cursor-scroll = ns-resize
+
+;----------------------------------------------------------
+;		        B A R / B O T T O M
+;----------------------------------------------------------
+;[bar/bottom]
+;monitor = ${env:MONITOR:DVI-I-0}
+;width = 100%
+;height = 27
+;fixed-center = true
+;bottom = true
+
+;background = ${colors.transparente}
+;foreground = ${colors.foreground}
+
+;padding-left = 2
+;padding-right = 2
+
+;module-margin-left = 1
+;module-margin-right = 2
+
+;font-0 = Fira:size=10;4
+;font-1 = feather:pixelsize=11;3
+;font-2 = feather:pixelsize=14;2
+
+;modules-left = weather
+;modules-center = firefox thunar termite telegram steam sep vbox
+;modules-right = mpd
+
+;tray-position = right
+
+;----------------------------------------------------------
+;		        I 3
+;----------------------------------------------------------
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+;      
+;          
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+
+strip-wsnumbers = true
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-foreground = ${colors.preto}
+label-mode-background = ${colors.rosa}
+
+label-focused = %name%
+label-focused-padding = 2
+
+label-unfocused = %name%
+label-unfocused-foreground = ${colors.unfocused}
+label-unfocused-padding = 2
+
+label-visible = %name%
+label-visible-foreground = ${colors.unfocused}
+label-visible-padding = 2
+
+label-urgent = %name%
+label-urgent-foreground = ${colors.rosa}
+label-urgent-padding = 2
+
+;----------------------------------------------------------
+;		       T I T L E
+;----------------------------------------------------------
+[module/title]
+type = internal/xwindow
+
+format-prefix = " "
+format = <label>
+
+label = %title%
+label-maxlen = 50
+
+;----------------------------------------------------------
+;		        W I N D O W
+;----------------------------------------------------------
+[module/window]
+type = custom/script
+interval = 1
+format-prefix = " "
+;label = %output:0:45:...%  %{B- -o -u}
+label = %output:0:50:...%
+click-left = ~/.config/polybar/scripts/janela.sh -i
+click-middle = ~/.config/polybar/scripts/janela.sh -c
+click-right = ~/.config/polybar/scripts/janela.sh -w
+exec = ~/.config/polybar/scripts/janela.sh
+
+;----------------------------------------------------------
+;			S C R E E N C A S T
+;----------------------------------------------------------
+[module/screencast]
+type = custom/script
+interval = 1
+label = %output%
+click-left = $TERMINAL -e ~/.local/bin/screencast &
+click-right = ~/.local/bin/screencast clear &
+exec = ~/.local/bin/screencast status
+tail = true
+
+;----------------------------------------------------------
+;			S C R E E N S H O T
+;----------------------------------------------------------
+[module/screenshot]
+type = custom/text
+content = 
+click-left = ~/.local/bin/screenshot &
+click-right = ~/.local/bin/screenshot clear &
+;----------------------------------------------------------
+;		        F I L E S Y S T E M
+;----------------------------------------------------------
+[module/filesystem]
+type = internal/fs
+
+interval = 25
+format-prefix= " "
+mount-0 = /
+
+label-mounted =  %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+;----------------------------------------------------------
+;		        C P U
+;----------------------------------------------------------
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = ""
+label = %percentage:2%%
+
+;----------------------------------------------------------
+;		        R A M
+;----------------------------------------------------------
+[module/ram]
+type = internal/memory
+interval = 2
+format-prefix = " "
+label = %percentage_used%%
+
+;----------------------------------------------------------
+;		        N E T W O R K
+;----------------------------------------------------------
+[module/network]
+type = internal/network
+interface = wlp2s0
+interval = 3.0
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+
+format-connected-prefix = ""
+format-disconnected-prefix =""
+;format-connected-prefix-foreground = ${colors.urgente}
+label-connected = "%signal%% %{F#F1F1F1}%{F-}%upspeed% %{F#F1F1F1}%{F-}%downspeed%"
+;label-disconnected = desconectado
+label-disconnected-foreground = ${colors.destaque}
+
+;----------------------------------------------------------
+;		        E T H E R N E T
+;----------------------------------------------------------
+[module/ethernet]
+type = internal/network
+interface = enp1s0
+interval = 3.0
+format-padding = 2
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.pink}
+label-connected = " %local_ip%"
+format-disconnected =
+;----------------------------------------------------------
+;		        T E M P
+;----------------------------------------------------------
+[module/temp]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-underline = #f50a4d
+format-warn = <ramp> <label-warn>
+;format-prefix = 
+label = %temperature%
+label-warn = %temperature%
+label-warn-foreground = ${colors.secondary}
+;format-warn-prefix = 
+ramp-0 = ""
+ramp-1 = ""
+ramp-2 = ""
+ramp-3 = ""
+ramp-4 = ""
+
+;----------------------------------------------------------
+;		        H O R A
+;----------------------------------------------------------
+[module/hora]
+type = internal/date
+interval = 5
+
+date =
+date-alt = "%d-%m-%Y"
+
+time = %H:%M
+;time-alt = %H:%M:%S
+
+format-prefix = 
+
+label = %date% %time%
+
+;----------------------------------------------------------
+;		        V O L U M E
+;----------------------------------------------------------
+[module/volume]
+type = internal/volume
+format-volume = <ramp-volume> <label-volume>
+;format-volume = <label-volume>
+
+label-volume = %percentage%%
+
+label-muted = 
+format-muted-prefix-foreground = ${colors.destaque}
+format-volume-muted = <label-muted>
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+;----------------------------------------------------------
+;		        W A L L P A P E R
+;----------------------------------------------------------
+[module/wallpaper]
+type = custom/text
+content = 
+click-left = ~/.config/polybar/scripts/wallpaper.sh x &
+click-middle = ~/.config/polybar/scripts/wallpaper.sh dd &
+click-right = ~/.config/polybar/scripts/wallpaper.sh d &
+scroll-up = ~/.config/polybar/scripts/wallpaper.sh p &
+scroll-down = ~/.config/polybar/scripts/wallpaper.sh a &
+
+;----------------------------------------------------------
+;		        P O W E R
+;----------------------------------------------------------
+[module/power]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+;label-open-foreground = ${colors.secondary}
+label-close = 
+label-close-foreground = ${colors.secondary}
+label-separator = |
+;label-separator = 
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = " Sair"
+menu-0-0-exec = menu-open-1
+
+menu-0-1 = " Suspender"
+menu-0-1-exec = menu-open-2
+
+menu-0-2 = " Reiniciar"
+menu-0-2-exec = menu-open-3
+
+menu-0-3 = " Desligar"
+menu-0-3-exec = menu-open-4
+
+
+menu-1-0 = "SAIR!?"
+menu-1-0-exec = i3-msg exit
+
+menu-2-0 = "SUSPENDER!?"
+menu-2-0-exec = systemctl suspend
+
+menu-3-0 = "REINICIAR!?"
+menu-3-0-exec = systemctl reboot
+
+menu-4-0 = "DESLIGAR!?"
+menu-4-0-exec = systemctl poweroff
+
+;----------------------------------------------------------
+;		       W E A T H E R
+;----------------------------------------------------------
+[module/weather]
+type = custom/script
+interval = 60
+exec = ~/.config/polybar/scripts/weather.py
+
+;----------------------------------------------------------
+;		        M P D
+;----------------------------------------------------------
+[module/mpd]
+type = internal/mpd
+format-online =  <label-song> <icon-prev> <icon-stop> <toggle> <icon-next>
+label-offline = 🎜
+icon-play = ⏵
+icon-pause = ⏸
+icon-stop = ⏹
+icon-prev = ⏮
+icon-next = ⏭
+icon-seekb = ⏪
+icon-seekf = ⏩
+
+label-song-maxlen = 50
+label-song-ellipsis = true
+
+;----------------------------------------------------------
+;			A P P S
+;----------------------------------------------------------
+[module/firefox]
+type = custom/text
+content = 
+click-left = chromium &
+click-middle = qutebrowser &
+click-right = firefox &
+
+[module/thunar]
+type = custom/text
+content = 
+click-left = thunar &
+
+[module/termite]
+type = custom/text
+content = 
+click-left = termite &
+
+[module/telegram]
+type = custom/text
+content = 
+click-left = telegram-desktop &
+
+[module/steam]
+type = custom/text
+content = 
+click-left = /usr/bin/steam > /dev/null 2> /dev/null &
+
+[module/vbox]
+type = custom/text
+content = 
+click-left = ~/.config/rofi/scripts/virtualbox
+
+[module/fechar]
+type = custom/text
+content = 
+content-foreground = ${colors.branco}
+click-middle = ~/.config/polybar/scripts/janela.sh -c &
+
+[module/sep]
+type = custom/text
+content = 
+
+[settings]
+screenchange-reload = true
+
+;----------------------------------------------------------
+;			B A T E R I A
+;----------------------------------------------------------
+[module/bateria]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 99
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC0
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+Additional formatting
+
+; see "man date" for details on how to format the time string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+; Default: %H:%M:%S
+time-format = %H:%M
+
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;format-full = <ramp-capacity> <label-full>
+
+; Available tokens:
+;   %percentage% (default)
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging = %percentage%%
+;format-charging = <animation-charging> <label-charging>
+;format-charging-foreground = ${colors.verde}
+;format-charging-prefix = " "
+
+; Available tokens:
+;   %percentage% (default)
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging =%percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+label-full =
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = "%{F#FF0000}%{F-}"
+ramp-capacity-1 = "%{F#FF0000}%{F-}"
+ramp-capacity-2 = "%{F#e4b226}%{F-}"
+ramp-capacity-3 = "%{F#98de00}%{F-}"
+ramp-capacity-4 = "%{F#98de00}%{F-}"
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-0 =
+animation-charging-1 =
+animation-charging-2 =
+animation-charging-3 =
+animation-charging-4 =
+; Framerate in milliseconds
+animation-charging-framerate = 500
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 2000
