@@ -22,17 +22,17 @@ clone o repositorio e mova manuamente os arquivos, se houver alguma
 configuração já existente faça backup
 
 	$cd /tmp && git clone https://github.com/zRenegado/i3-desktop.git
-	$copie os arquivos, de configuração:
+	copie os arquivos, de configuração:
 	$cp -R i3-desktop/.config  ~/.config
 	$cp -R i3-desktop/.local ~/.local
 	$cd
 
 Se necessario forneça a permissão de execussão,"$ chmod +x" aos scripts em 
 ~/.config/polybar/scripts e ~/.local/bin, exemplo:
-$chmod +x ~/.local/bin/*.sh 
+	$chmod +x ~/.local/bin/*.sh 
 
 ## ScreenShots
 
 ![Screenshot #1][screenshot1]
 
-[screenshot]:https://raw.githubusercontent.com/zRenegado/i3-desktop/master/.Screeshot/i3.png "Screnshot #1"
+[screenshot1]:https://raw.githubusercontent.com/zRenegado/i3-desktop/master/.Screeshot/i3.png "Screnshot #1"
