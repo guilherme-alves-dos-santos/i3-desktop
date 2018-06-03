@@ -7,7 +7,8 @@
 
 - [i3-gaps](https://github.com/zRenegado/i3-desktop/blob/master/.config/i3/config)
 - [polybar](https://github.com/zRenegado/i3-desktop/blob/master/.config/polybar/config)
-- [i3blocks](https://github.com)
+- [i3blocks](https://github.com/zRenegado/i3-desktop/tree/master/.config/i3blocks)
+- [dunst](https://github.com/zRenegado/i3-desktop/tree/master/.config/dunst)
 - [rofi](https://github.com/zRenegado/i3-desktop/blob/master/.config/rofi/config.rasi)
 - [~/.local/bin](https://github.com/zRenegado/i3-desktop/tree/master/.local/bin)
 - [~/.local/share](https://github.com/zRenegado/i3-desktop/tree/master/.local/share)
