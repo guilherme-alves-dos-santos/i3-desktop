@@ -1,18 +1,23 @@
 #!/bin/bash
+function verifica_usuario() {
+	[ "$EUID" -eq 0 ] && echo "É necessário rodar o script como usuário normal, não como root." && exit 1
+}
 
-app_ok=1
-apps=("i3-gaps" "polybar" "dunst" "xdotool" "ttf-fira-sans" "adobe-source-code-pro-fonts" "jsoncpp" "rofi" "ttf-font-awesome")
+function verifica_pacotes() {
+	app_ok=1
+	apps=("i3-gaps" "polybar" "dunst" "clipit" "xdotool" "ttf-fira-sans" "adobe-source-code-pro-fonts" "jsoncpp" "rofi" "ttf-font-awesome" "feh" "otf-font-awesome" "otf-font-awesome-4" "ttf-font-awesome" "ttf-font-awesome-4")
 
-for app in ${apps[@]}; do
-	pacman -Q $app 1> /dev/null 2> /dev/null
-	if [ $? = 1 ]; then
-		echo "$app não instalado. Instale primeiro."
-		app_ok=0
-	fi
-done
-[ "$app_ok" -eq 0 ] && echo "Existem dependências, programa abortado." && exit 1
+	for app in ${apps[@]}; do
+		pacman -Q $app 1> /dev/null 2> /dev/null
+		if [ $? = 1 ]; then
+			echo "$app não instalado. Instale primeiro."
+			app_ok=0
+		fi
+	done
+	[ "$app_ok" -eq 0 ] && echo "Existem dependências, programa abortado." && exit 1
+}
 
-[ "$EUID" -eq 0 ] && echo "É necessário rodar o script como usuário normal, não como root." && exit 1
+function configura_o_i3() {
 
 read -p "ATENÇÃO!!! Esse script irá apagar configurações prévias do i3 e da Polybar!!! Deseja continuar? [s/N]: " confirma
 
@@ -31,7 +36,6 @@ curl -s -o ${HOME}/.config/i3/config 'https://raw.githubusercontent.com/zRenegad
 
 echo "Instalando as configs da polybar..."
 curl -s -o ${HOME}/.config/polybar/launch.sh 'https://raw.githubusercontent.com/zRenegado/i3-desktop/master/.config/polybar/launch.sh'
-chmod +x ${HOME}/.config/polybar/launch.sh
 curl -s -o ${HOME}/.config/polybar/config "https://github.com/zRenegado/i3-desktop/raw/master/.config/polybar/config"
 
 # Polybar Scripts
@@ -90,17 +94,36 @@ for rscript in ${rscripts[@]}; do
 done
 
 # fontawesome
-fc-list | grep -i feather 1> /dev/null 2> /dev/null
-if [ $? -ne 0 ]; then
-	echo "Fonte FeatherIcons não encontrado, instalando..."
-	if [ ! -d ${HOME}/.local/share/fonts ]; then
-		mkdir ${HOME}/.local/share/fonts
-	fi
-	curl -s "https://raw.githubusercontent.com/zrenegado/i3-desktop/master/.local/share/fonts/feather.ttf" > ${HOME}/.local/share/fonts/feather.ttf
-	fc-cache -v -f
-fi
+#fc-list | grep -i feather 1> /dev/null 2> /dev/null
+#if [ $? -ne 0 ]; then
+#	echo "Fonte FeatherIcons não encontrado, instalando..."
+#	if [ ! -d ${HOME}/.local/share/fonts ]; then
+#		mkdir ${HOME}/.local/share/fonts
+#	fi
+#	curl -s "https://raw.githubusercontent.com/zrenegado/i3-desktop/master/.local/share/fonts/feather.ttf" > ${HOME}/.local/share/fonts/feather.ttf
+#	fc-cache -v -f
+#fi
+}
 
-# Wallpaper
+function permissoes() {
+
+	read -p "ATENÇÃO!!! É necessario conceder permissões de execussão aos arquivos para que funcionem [s/N]: " confirma
+
+	if [[ -z $confirma ]] || [[ $confirma != [sS]* ]]; then
+		exit 0
+	fi
+	echo "Concendo permissões de execussão para os arquivos"
+
+	chmod +x ~/.local/bin/*.sh
+	chmod +x ~/.local/share/rofi/themes/*.rasi
+	chmod +x ~/.config/polybar/script/scripts/*.sh
+	chmod +x ~/.config/polybar/laucher.sh
+	chmod +x ~/.config/polybar/config
+	chmod +x ~/.config/dunst/dunstrc
+
+}
+
+function wallpaper() {
 DIR="${HOME}/.local/share/wallpaper"
 WALL="${DIR}/maxresdefault.jpg"
 
@@ -109,8 +132,14 @@ if [ ! -f $WALL ]; then
 		mkdir -p $DIR
 	fi
 fi
-
 curl -s "https://i.imgur.com/OPwODDy.jpg" > $WALL
+}
+
+verifica_usuario
+verifica_pacotes
+configura_o_i3
+permissoes
+wallpaper
 
 if [ "$DESKTOP_SESSION" == "i3" ]; then
 	i3-msg restart

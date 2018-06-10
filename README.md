@@ -1,5 +1,6 @@
 ## i3-desktop
-  Para usar a configuração do i3-desktop é nessario previamente instalar: i3-gaps, polybar, dunst, xdotool, ttf-fira-sans, adobe-source-code-pro-fonts, jsoncpp, rofi e ttf-font-awesome
+  Para usar a configuração do i3-desktop é nessario previamente instalar: i3-gaps, polybar, dunst, xdotool, ttf-fira-sans, adobe-source-code-pro-fonts, jsoncpp, clipit, rofi, feh e ttf-font-awesome.
+  Para isso é nessario que você tenha algum [AUR Help](https://wiki.archlinux.org/index.php/AUR_helpers_(Portugu%C3%AAs)), para instalar alguns destes
 
 [Este projeto é um fork parcial de Sistematico](https://github.com/sistematico/majestic)
 
@@ -18,7 +19,7 @@
 
 Inicialmente instale os pacotes:
 
-i3-gaps polybar dunst xdotool ttf-fira-sans adobe-source-code-pro-fonts jsoncpp rofi ttf-font-awesome git
+i3-gaps polybar dunst xdotool ttf-fira-sans adobe-source-code-pro-fonts jsoncpp rofi otf-font-awesome otf-font-awesome-4 ttf-font-awesome ttf-font-awesome-4 git
 
 Usando o git:
 
