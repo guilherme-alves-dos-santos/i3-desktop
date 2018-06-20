@@ -282,7 +282,6 @@ label = %date% %time%
 [module/volume]
 type = internal/volume
 format-volume = <ramp-volume> <label-volume>
-;format-volume = <label-volume>
 
 label-volume = %percentage%%
 

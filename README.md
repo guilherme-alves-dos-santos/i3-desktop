@@ -1,8 +1,10 @@
-## i3-desktop
-  Para usar a configuração do i3-desktop é nessario previamente instalar: i3-gaps, polybar, dunst, xdotool, ttf-fira-sans, adobe-source-code-pro-fonts, jsoncpp, clipit, rofi, feh e ttf-font-awesome.
-  Para isso é nessario que você tenha algum [AUR Help](https://wiki.archlinux.org/index.php/AUR_helpers_(Portugu%C3%AAs)), para instalar alguns destes
-
+(Arch Linux 64-bits)[https://archlinux.org]
 [Este projeto é um fork parcial de Sistematico](https://github.com/sistematico/majestic)
+
+## i3-desktop
+
+Para usar a configuração do i3-desktop é nessario previamente instalar: i3-gaps, polybar, dunst, xdotool, ttf-fira-sans, adobe-source-code-pro-fonts, jsoncpp, clipit, rofi, feh e ttf-font-awesome.
+Para isso é nessario que você tenha algum [AUR Helper](https://wiki.archlinux.org/index.php/AUR_helpers_(Portugu%C3%AAs)), para instalar as dependências.
 
 ## Súmario
 
@@ -19,25 +21,25 @@
 
 Inicialmente instale os pacotes:
 
-i3-gaps polybar dunst xdotool ttf-fira-sans adobe-source-code-pro-fonts jsoncpp rofi otf-font-awesome otf-font-awesome-4 ttf-font-awesome ttf-font-awesome-4 git
+i3-gaps polybar dunst xdotool ttf-fira-sans adobe-source-code-pro-fonts jsoncpp rofi otf-font-awesome otf-font-awesome-4 ttf-font-awesome ttf-font-awesome-4 git feh
 
 Usando o git:
 
 clone o repositorio e mova manuamente os arquivos, se houver alguma configuração já existente faça backup
 
-	$cd /tmp && git clone https://github.com/zRenegado/i3-desktop.git
-	copie os arquivos, de configuração:
-	$cp -R i3-desktop/.config  ~/.config
-	$cp -R i3-desktop/.local ~/.local
+	$ cd /tmp && git clone https://github.com/zRenegado/i3-desktop.git
+	$ cp -R i3-desktop/.config  ~/.config
+	$ cp -R i3-desktop/.local ~/.local
 
-Usando o instalador automatico:
+Alguns script porderam precisar de permissão de execução. [Duvida]
 
-	bash <(curl -s -o 'https://raw.githubusercontent.com/zRenegado/i3-desktop/master/script/i3-desktop.sh')
+  $ chmod +x arquivo
 
-Se necessario forneça a permissão de execussão,"$ chmod +x" aos scripts em ~/.config/polybar/scripts e ~/.local/bin, o primeiro exemplo é dando permissão a qualquer arquivo .sh e o segundo a um arquivo especifico:
+##Usando o instalador automatico:
 
-	$chmod +x ~/.local/bin/*.sh
-	$chmod +x ~/.local/bin/screenshot.sh
+É nessário previamente sadisfazer as [dependências do i3](https://github.com/zRenegado/i3-desktop/blob/master/README.md#i3-desktop)
+
+  bash <(curl -s -o 'https://raw.githubusercontent.com/zRenegado/i3-desktop/master/script/i3-desktop.sh')
 
 ## Intervenção manual
 
@@ -46,7 +48,6 @@ Caso não apareça algum icone da barra, verifique as placas controladoras que n
 ![Screenshot #1][screenshot1]
 
 [screenshot1]:https://github.com/zRenegado/i3-desktop/blob/master/.Screeshot/barra.png "Screnshot #1"
-
 
 ## ScreenShots
 
