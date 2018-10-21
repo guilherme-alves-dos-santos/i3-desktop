@@ -42,13 +42,13 @@ font-0 = Fira:size=10;3
 font-1 = feather:pixelsize=11;3
 font-2 = Fira:size=8;1
 font-3 = Zekton:Bold:size=12;4
-font-4 = "Font Awesome 5 Free:style=Regular:pixelsize=14;4"
-font-5 = "Font Awesome 5 Free:style=Solid:pixelsize=14;4"
-font-6 = "Font Awesome 5 Brands:pixelsize=14;4"
+font-4 = "Font Awesome 5 Free:style=Regular:pixelsize=12;4"
+font-5 = "Font Awesome 5 Free:style=Solid:pixelsize=12;4"
+font-6 = "Font Awesome 5 Brands:pixelsize=12;4"
 
 modules-left = i3
 modules-center = window
-modules-right = filesystem cpu network temp hora volume bateria ethernet power
+modules-right =network ethernet hora volume brilho bateria power
 
 ;cursor-click = pointer
 ;cursor-scroll = ns-resize
@@ -56,29 +56,36 @@ modules-right = filesystem cpu network temp hora volume bateria ethernet power
 ;----------------------------------------------------------
 ;		        B A R / B O T T O M
 ;----------------------------------------------------------
-;[bar/bottom]
+[bar/bottom]
 ;monitor = ${env:MONITOR:DVI-I-0}
-;width = 100%
-;height = 27
-;fixed-center = true
-;bottom = true
+width = 100%
+height = 20
+fixed-center = true
+offset-y = -1
+bottom = true
+enable-ipc = true
 
-;background = ${colors.transparente}
-;foreground = ${colors.foreground}
+background = ${colors.transparente}
+foreground = ${colors.foreground}
 
-;padding-left = 2
-;padding-right = 2
+padding-left = 2
+padding-right = 2
 
-;module-margin-left = 1
-;module-margin-right = 2
+module-margin-left = 1
+module-margin-right = 2
 
-;font-0 = Fira:size=10;4
-;font-1 = feather:pixelsize=11;3
-;font-2 = feather:pixelsize=14;2
+font-0 = Fira:size=10;3
+font-1 = feather:pixelsize=11;3
+font-2 = Fira:size=8;1
+font-3 = Zekton:Bold:size=12;4
+font-4 = "Font Awesome 5 Free:style=Regular:pixelsize=12;4"
+font-5 = "Font Awesome 5 Free:style=Solid:pixelsize=12;4"
+font-6 = "Font Awesome 5 Brands:pixelsize=12;4"
+font-7 = "Weather Icons:size=13;2"
 
-;modules-left = weather
-;modules-center = firefox thunar termite telegram steam sep vbox
-;modules-right = mpd
+modules-left = openweathermap-detailed
+modules-center = filesystem cpu temp ram
+modules-right = mpd
 
 ;tray-position = right
 
@@ -182,12 +189,14 @@ click-right = ~/.local/bin/screenshot clear &
 type = internal/fs
 
 interval = 25
-format-prefix= " "
+format-prefix= ""
 mount-0 = /
 
-label-mounted =  %percentage_used%%
-label-unmounted = %mountpoint% not mounted
+label-mounted =  %percentage_used%%
+label-unmounted =  %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
+label-warn = %percentage_used%
+label-warn-foreground = ${colors.destaque}
 
 ;----------------------------------------------------------
 ;		        C P U
@@ -197,15 +206,68 @@ type = internal/cpu
 interval = 2
 format-prefix = ""
 label = %percentage:2%%
-
+label-warn = %percentage:2%%
+label-warn-foreground=${colors.destaque}
 ;----------------------------------------------------------
 ;		        R A M
 ;----------------------------------------------------------
 [module/ram]
 type = internal/memory
 interval = 2
-format-prefix = " "
-label = %percentage_used%%
+;format-prefix = " "
+;label = %percentage_used%%
+; Available tags:
+;   <label> (default)
+;   <bar-used>
+;   <bar-free>
+;   <ramp-used>
+;   <ramp-free>
+;   <bar-swap-used> (unreleased)
+;   <bar-swap-free> (unreleased)
+;   <ramp-swap-used> (unreleased)
+;   <ramp-swap-free> (unreleased)
+format = <label>
+
+; Available tokens:
+;   %percentage_used% (default)
+;   %percentage_free%
+;   %gb_used%
+;   %gb_free%
+;   %gb_total%
+;   %mb_used%
+;   %mb_free%
+;   %mb_total%
+;   %percentage_swap_used%
+;   %percentage_swap_free%
+;   %mb_swap_total%
+;   %mb_swap_free%
+;   %mb_swap_used%
+;   %gb_swap_total%
+;   %gb_swap_free%
+;   %gb_swap_used%
+
+label = RAM %gb_used%
+
+; Only applies if <bar-used> is used
+bar-used-indicator =
+bar-used-width = 50
+bar-used-foreground-0 = #55aa55
+bar-used-foreground-1 = #557755
+bar-used-foreground-2 = #f5a70a
+bar-used-foreground-3 = #ff5555
+bar-used-fill = ▐
+bar-used-empty = ▐
+bar-used-empty-foreground = #444444
+
+; Only applies if <ramp-used> is used
+ramp-used-0 = ▁
+ramp-used-1 = ▂
+ramp-used-2 = ▃
+ramp-used-3 = ▄
+ramp-used-4 = ▅
+ramp-used-5 = ▆
+ramp-used-6 = ▇
+ramp-used-7 = █
 
 ;----------------------------------------------------------
 ;		        N E T W O R K
@@ -214,10 +276,8 @@ label = %percentage_used%%
 type = internal/network
 interface = wlp2s0
 interval = 3.0
-
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
-
 format-connected-prefix = ""
 format-disconnected-prefix =""
 ;format-connected-prefix-foreground = ${colors.urgente}
@@ -229,21 +289,22 @@ label-disconnected-foreground = ${colors.destaque}
 ;		        E T H E R N E T
 ;----------------------------------------------------------
 [module/ethernet]
+format-connected = <label-connected>
 type = internal/network
 interface = enp1s0
 interval = 3.0
 format-padding = 2
 format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.pink}
-label-connected = " %local_ip%"
-format-disconnected =
+;format-connected-prefix-foreground = ${colors.pink}
+label-connected = "%{F#F1F1F1}%{F-}%upspeed% %{F#F1F1F1}%{F-}%downspeed%"
+;format-disconnected =
 ;----------------------------------------------------------
 ;		        T E M P
 ;----------------------------------------------------------
 [module/temp]
 type = internal/temperature
 thermal-zone = 0
-warn-temperature = 60
+warn-temperature = 70
 
 format = <ramp> <label>
 format-underline = #f50a4d
@@ -251,7 +312,8 @@ format-warn = <ramp> <label-warn>
 ;format-prefix = 
 label = %temperature%
 label-warn = %temperature%
-label-warn-foreground = ${colors.secondary}
+label-warn-foreground = ${colors.destaque}
+;label-warn-foreground = ${colors.secondary}
 ;format-warn-prefix = 
 ramp-0 = ""
 ramp-1 = ""
@@ -266,15 +328,31 @@ ramp-4 = ""
 type = internal/date
 interval = 5
 
-date =
-date-alt = "%d-%m-%Y"
+date =%d-%m%
+;date-alt = %d-%m-%Y%
 
 time = %H:%M
 ;time-alt = %H:%M:%S
 
-format-prefix = 
+format-prefix =
 
-label = %date% %time%
+label = %time%  %date%
+format =  <label>
+;<ramp>
+
+ramp-0= ""
+ramp-1= ""
+ramp-2=  ""
+ramp-3=  ""
+ramp-4=  ""
+ramp-5=  ""
+ramp-6=  ""
+ramp-7= ""
+ramp-8= ""
+ramp-9=  ""
+ramp-10=  ""
+ramp-11=  ""
+
 
 ;----------------------------------------------------------
 ;		        V O L U M E
@@ -282,6 +360,7 @@ label = %date% %time%
 [module/volume]
 type = internal/volume
 format-volume = <ramp-volume> <label-volume>
+;format-volume = <label-volume>
 
 label-volume = %percentage%%
 
@@ -348,13 +427,15 @@ menu-4-0 = "DESLIGAR!?"
 menu-4-0-exec = systemctl poweroff
 
 ;----------------------------------------------------------
-;		       W E A T H E R
+;		       W E A T H E R openweathermap-detailed
 ;----------------------------------------------------------
-[module/weather]
+[module/openweathermap-detailed]
 type = custom/script
-interval = 60
-exec = ~/.config/polybar/scripts/weather.py
-
+exec = ~/.config/polybar/scripts/previsao_do_tempo.sh
+interval = 600
+format = " <label> "
+format-underline = ${colors.branco}
+format-foreground = ${colors.branco}
 ;----------------------------------------------------------
 ;		        M P D
 ;----------------------------------------------------------
@@ -490,7 +571,7 @@ label-discharging =%percentage%%
 
 ; Available tokens:
 ;   %percentage% (default)
-label-full =
+label-full = 
 
 ; Only applies if <ramp-capacity> is used
 ramp-capacity-0 = "%{F#FF0000}%{F-}"
@@ -503,11 +584,11 @@ ramp-capacity-4 = "%{F#98de00}%{F-}"
 bar-capacity-width = 10
 
 ; Only applies if <animation-charging> is used
-animation-charging-0 =
-animation-charging-1 =
-animation-charging-2 =
-animation-charging-3 =
-animation-charging-4 =
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
 ; Framerate in milliseconds
 animation-charging-framerate = 500
 
@@ -519,3 +600,31 @@ animation-discharging-3 = 
 animation-discharging-4 = 
 ; Framerate in milliseconds
 animation-discharging-framerate = 2000
+
+;----------------------------------------------------------
+;			B R I L H O
+;----------------------------------------------------------
+
+[module/brilho]
+type = internal/backlight
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = acpi_video0
+enable-scroll = true
+
+; Available tags:
+;   <label> (default)
+;   <ramp>
+;   <bar>
+format = <ramp><label>
+
+; Available tokens:
+;   %percentage% (default)
+label =%percentage%%
+
+; Only applies if <ramp> is used
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑

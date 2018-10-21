@@ -19,10 +19,11 @@ focus_on_window_activation focus
 #############################################################
 ############### C O L O R S #################################
 #############################################################
-set_from_resource $fg i3wm.foreground	  #D8DEE9
-set_from_resource $bg i3wm.background	  #2E3440
-set_from_resource $ba i3wm.cinza4		    #4c566a
+set_from_resource $fg i3wm.foreground	#D8DEE9
+set_from_resource $bg i3wm.background	#2E3440
+set_from_resource $ba i3wm.cinza4		#4c566a
 set_from_resource $bi i3wm.cinza2       #3b4252
+# 2e3440
 
 # class                 border  backgr. text indicator child_border
 client.focused          $bg     $bg     $fg  $ba       $ba
@@ -39,16 +40,18 @@ client.background       $bg
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
-
+bindsym $mod+Return exec --no-startup-id termite
 # kill focused window
 bindsym $mod+Shift+q kill
 bindsym $mod+q kill
 
 # Rofi
-
+#bindsym $mod+g exec --no-startup-id echo "" | rofi -dmenu -p "Google: " -bw 0 -lines 1 -separator-style none -location 0 -width 250 -hide-scrollbar -padding 5
+#| xargs -I{} $BROWSER https://www.google.com.br/search?q={}
+#bindsym --release Mod1+g exec --no-startup-id exec ~/.config/rofi/scripts/git
 bindsym $mod+Shift+w exec --no-startup-id ~/.config/rofi/scripts/janelas x
 bindsym $mod+d exec --no-startup-id ~/.config/rofi/scripts/drun x
+#bindsym Mod1+F2 exec --no-startup-id ~/.config/rofi/scripts/run x
 bindsym $mod+c exec --no-startup-id ~/.config/rofi/scripts/configs x
 bindsym $mod+a exec --no-startup-id ~/.config/rofi/scripts/apps x
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/rofi/scripts/power x
@@ -139,7 +142,7 @@ bindsym Mod1+Shift+Tab workspace prev
 #                     
 #                     
 #              
-set $ws1 "1:"
+set $ws1 "1:"
 set $ws2 "2:"
 set $ws3 "3:"
 set $ws4 "4:"
@@ -224,7 +227,7 @@ mode $desligar {
 	bindsym s exec systemctl suspend
 
 	bindsym Return mode "default"
-  bindsym Escape mode "default"
+    bindsym Escape mode "default"
 }
 bindsym $mod+Mod1+e mode $desligar
 
@@ -304,11 +307,11 @@ for_window [title="Lista de amigos"] floating enable, move absolute position 166
 for_window [title="(screencast$|^DownThemAll|DownThemAll!$)"] move window to scratchpad
 
 assign [class="^(Chromium|qutebrowser|Epiphany|Firefox|firefox-developer)"] $ws1
-assign [class="(Termite|Tilix)"] $ws2
+assign [class="(Tilix)"] $ws2
 assign [class="^(^Code*|Pluma|Sublime_text|Atom)"] $ws3
 assign [class="(Thunar|Pcmanfm)"] $ws4
 assign [class="(Lxappearance|^Pamac*|Notes|Lxtask|^Mate-disk-usage-analyzer)"] $ws5
-assign [class="(Steam)"] $ws6
+assign [class="(^Steam)"] $ws6
 assign [class="(Gimp|Inkscape)"] $ws7
 assign [class="(Whatsie|Whatsapp|whatsapp-desktop)"] $ws8
 assign [class="(^Telegram|^Hexchat)"] $ws9
@@ -316,8 +319,8 @@ assign [class="(^Telegram|^Hexchat)"] $ws9
 #############################################################
 ############### I N I T #####################################
 #############################################################
-
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+#exec_always --no-startup-id $HOME/.config/polybar/scripts/wallpaper.sh x
 exec --no-startup-id compton -b
 exec --no-startup-id dunst
 exec --no-startup-id clipit
@@ -327,4 +330,4 @@ exec --no-startup-id thunar --daemon
 exec --no-startup-id numlockx on
 exec --no-startup-id $HOME/.local/bin/xautolock
 exec --no-startup-id xrdb ~/.Xresources
-exec_always --no-startup-id feh --bg-fill ~/.local/share/wallpaper/maxresdefault.jpg
+exec_always --no-startup-id feh --bg-fill ~/Wallpaper/nanatsu_no_taizai_book.jpg
