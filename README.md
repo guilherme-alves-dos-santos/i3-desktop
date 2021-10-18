@@ -1,6 +1,5 @@
 [Arch Linux 64-bits](https://archlinux.org)
 
-Este projeto é um fork parcial do [Sistematico](https://github.com/sistematico/majestic)
 
 #i3-desktop
 
